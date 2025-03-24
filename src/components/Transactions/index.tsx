@@ -1,8 +1,14 @@
-import { useCallback } from "react"
+import { useCallback, useState } from "react"
 import { useCustomFetch } from "src/hooks/useCustomFetch"
 import { SetTransactionApprovalParams } from "src/utils/types"
 import { TransactionPane } from "./TransactionPane"
 import { SetTransactionApprovalFunction, TransactionsComponent } from "./types"
+
+// Bug 7 fixed
+// The transaction approval state will be synced now
+type approvedProps = {
+  [key: string]: boolean
+}
 
 export const Transactions: TransactionsComponent = ({ transactions }) => {
   const { fetchWithoutCache, loading } = useCustomFetch()
@@ -17,6 +23,8 @@ export const Transactions: TransactionsComponent = ({ transactions }) => {
     [fetchWithoutCache]
   )
 
+  const [approvedState, setApprovedState] = useState<approvedProps>({})
+
   if (transactions === null) {
     return <div className="RampLoading--container">Loading...</div>
   }
@@ -29,6 +37,8 @@ export const Transactions: TransactionsComponent = ({ transactions }) => {
           transaction={transaction}
           loading={loading}
           setTransactionApproval={setTransactionApproval}
+          approvedState={approvedState}
+          setApprovedState={setApprovedState}
         />
       ))}
     </div>
