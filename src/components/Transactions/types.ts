@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react"
+import { Dispatch, FunctionComponent, SetStateAction } from "react"
 import { Transaction } from "../../utils/types"
 
 export type SetTransactionApprovalFunction = (params: {
@@ -13,6 +13,8 @@ type TransactionPaneProps = {
   loading: boolean
   approved?: boolean
   setTransactionApproval: SetTransactionApprovalFunction
+  approvedState: { [key: string]: boolean }
+  setApprovedState: Dispatch<SetStateAction<{ [key: string]: boolean }>>
 }
 
 export type TransactionsComponent = FunctionComponent<TransactionsProps>
